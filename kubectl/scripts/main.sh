@@ -1,3 +1,5 @@
+#!/bin/bash
+
 function main() {
 	# Source the other files to gain access to their functions
 	scriptDir=$(dirname ${0})
