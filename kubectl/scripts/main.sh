@@ -9,6 +9,10 @@ function main() {
 	source ${scriptDir}/setup_secrets.sh
 
 	parseInputs
-	setupSecrets
+  if [ ! -z "${kubeConfig}" ]; then
+	  setupSecrets
+  fi
 	installKubectl
 }
+
+main "${*}"
