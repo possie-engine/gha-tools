@@ -21,17 +21,7 @@ runs:
       shell: bash
       run: |
         REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${GITHUB_REPOSITORY}.git"
-        # For a partial checkout we need a branch name (like issue/APP-XXXX)
-        # Now, follow the hands:
-        #   GITHUB_HEAD_REF is defined only for pull_request triggers and it's a branch name
-        #   GITHUB_REF is defined only for branch push or tag triggers and it's a ref (ref/heads/issue/APP-XXXX)
-        PR_BRANCH=${GITHUB_HEAD_REF}
-        PUSH_BRANCH=${GITHUB_REF#refs/heads/}
-        TAG_BRANCH=${GITHUB_REF#refs/tags/}
-        # Pick one of the three
-        BRANCH="${PR_BRANCH:-${PUSH_BRANCH}}"
-        BRANCH="${BRANCH:-${TAG_BRANCH}}"
-        git clone --filter=blob:none --no-checkout --depth 1 --single-branch --branch "$BRANCH" --sparse "$REPO" .
+        git clone --filter=blob:none --no-checkout --depth 1 --single-branch --branch ${GITHUB_REF_NAME} --sparse $REPO ${GITHUB_WORKSPACE}
         git sparse-checkout init --cone
         git sparse-checkout add ${{ inputs.paths }}
         git checkout
