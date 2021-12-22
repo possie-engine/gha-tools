@@ -21,7 +21,10 @@ runs:
       shell: bash
       run: |
         REPO="https://${GITHUB_ACTOR}:${{ inputs.token }}@github.com/${GITHUB_REPOSITORY}.git"
-        git clone --filter=blob:none --no-checkout --depth 1 --single-branch --branch ${GITHUB_REF_NAME} --sparse $REPO ${GITHUB_WORKSPACE}
+        # If it is a pull request event, fetch the commit on the pr branch. Otherwise, fetch the commit on the pushed branch.
+        BRANCH=${GITHUB_HEAD_REF:-GITHUB_REF_NAME}
+        echo "Cloning branch: ${BRANCH}, commit sha: ${GITHUB_SHA}"
+        git clone --filter=blob:none --no-checkout --depth 1 --single-branch --branch ${BRANCH} --sparse $REPO ${GITHUB_WORKSPACE}
         git sparse-checkout init --cone
         git sparse-checkout add ${{ inputs.paths }}
         git checkout
