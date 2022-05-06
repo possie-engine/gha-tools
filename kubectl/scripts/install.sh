@@ -31,7 +31,7 @@ function installKubectl() {
 
 	echo "Moving kubectl ${kubectlVersion} to PATH"
 	chmod +x /tmp/kubectl
-	mv /tmp/kubectl ~/bin/kubectl
+	mv /tmp/kubectl /usr/local/bin/kubectl
 	if [ "${?}" -ne 0 ]; then
 		echo -e "${BRed}Failed to move kubectl ${kubectlVersion}${NC}"
 		exit 1

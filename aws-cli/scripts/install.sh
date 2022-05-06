@@ -34,7 +34,7 @@ function installAWS() {
 	echo "Installing aws-cli ${awsVersion}"
 	chmod +x ~/aws-cli/aws/install
 	mkdir -p ~/aws-cli/cli
-	~/aws-cli/aws/install -i ~/aws-cli/cli -b ~/bin
+	~/aws-cli/aws/install -i ~/aws-cli/cli -b /usr/local/bin
 	if [ "${?}" -ne 0 ]; then
 		echo -e "${BRed}Failed to install aws-cli v${awsVersion}${NC}"
 		exit 1
